@@ -1,0 +1,11 @@
+#!/bin/bash
+# Comentario \
+exec /usr/local/bin/vmd -dispdev text -e "$0" -args ${1+"$@"}
+if { [llength $angv] <3 } {puts "error: missingarguments"; quit}
+mol new 
+mol addfile [lindex $argv 0]
+set protbb [atomselect top "(type H N CA C CO O OXT) and (protein)"]
+set newaa [lindex $argv 1]
+$protbb set {resname} $newaa
+$protbb writepdb [lindex $argv 2]
+quit
